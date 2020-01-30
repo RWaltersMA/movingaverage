@@ -3,7 +3,7 @@
 Showing moving average Demo
 
 PREP:
-mongo "mongodb+srv://mongodbsink-szptp.mongodb.net/test"  --username kafkauser
+mongo "mongodb+srv://mongodbsink-szptp.mongodb.net/test"  --username <<USERNAME>>
 Use Stocks
 db.StockData.remove({})
 
@@ -13,7 +13,7 @@ install.package(“mongolite”)
 libary(ggplot2)
 library(mongolite)
 
-ts=mongo(collection="StockData", db="Stocks", url="mongodb+srv://kafkauser:kafkapassword@mongodbsink-szptp.mongodb.net/test?retryWrites=true&w=majority")
+ts=mongo(collection="StockData", db="Stocks", url="<<ATLAS CONNECTION STRING GOES HERE>>")
 
 tss <- ts$find(fields='{"company_symbol":true,"company_name":true,"price":true,"tx_time":true}')
 
