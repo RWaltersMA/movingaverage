@@ -1,6 +1,6 @@
 # MongoDB, MySQL, Kafka Connect, MongoDB Connector for Apache Kafka and R example - Stock example
 
-This demo generates fake stock data and populates two databases - MySQL and MongoDB.  Data flows from these databases to Kafka topics via their respetive connectors - Debezium MySQL and MongoDB Connector for Apache Kafka.  Data from both topics are  then sinked to a MongoDB cluster in MongoDB Atlas using the MongoDB Connector for Apache Kafka as a sink.  With the combined data in Atlas we connect using an R client like RStudio to query the data for a moving average and other queries.
+<p>This demo generates fake stock data and populates two databases - MySQL and MongoDB.  Data flows from these databases to Kafka topics via their respetive connectors - Debezium MySQL and MongoDB Connector for Apache Kafka.  Data from both topics are  then sinked to a MongoDB cluster in MongoDB Atlas using the MongoDB Connector for Apache Kafka as a sink.  With the combined data in Atlas we connect using an R client like RStudio to query the data for a moving average and other queries.</p>
 
 ## Requirements
   - Docker 18.09+
@@ -26,7 +26,7 @@ This shell script will build the following demo containers locally: mysqlimg, st
 
 **3. Copy the Atlas Connection String**
 
-If you do not have a MongoDB Atlas cluster, [follow these instructions](https://docs.atlas.mongodb.com/getting-started/).
+<p>If you do not have a MongoDB Atlas cluster, [follow these instructions](https://docs.atlas.mongodb.com/getting-started/).
 
 Just creating the cluster is not enough to run the demo.  You will need to define a database user for use by the Kafka Connector to connect to the MongoDB Atlas cluster.  You will also have to whitelist the IP address of the docker host.
 
@@ -39,7 +39,7 @@ Provide a username and password and select, “Read and write to any database”
 If your docker host is not whitelisted:
 Click, “Network Access” from the Atlas menu and click, “Add IP Address”.  Here you can add your current IP address or any IP Address or block of addresses in CIDR format.  Note: If you do not know or can not obtain the IP address of the docker host you can add, “0.0.0.0” as an entry which will allow connections from anywhere on the internet.  This is not a recommended configuration.
 
-To copy the connection string select the “CONNECT” button on your Atlas cluster then choose “Connect your application”.  Click the Copy button to copy the connection string to the clipboard.
+To copy the connection string select the “CONNECT” button on your Atlas cluster then choose “Connect your application”.  Click the Copy button to copy the connection string to the clipboard.</p>
 
 **4. Modify the RUN.SH file to update the MongoDB Atlas Connection string**
 
