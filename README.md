@@ -14,7 +14,7 @@ This demo generates fake stock data and populates two databases - MySQL and Mong
 
 [https://github.com/RWaltersMA/movingaverage.git](https://github.com/RWaltersMA/movingaverage.git)
 
-### 2. Build the demo images**
+### 2. Build the demo images
 
 Run the following script from the command shell:
 
@@ -24,7 +24,7 @@ Note: Make sure you are in the same directory as the build-images script file.  
 
 This shell script will build the following demo containers locally: mysqlimg, stockgenmongo, stockgenmysql, stockportal.  You can confirm these four images were created by issuing a “docker images” command.
 
-### 3. Copy the Atlas Connection String**
+### 3. Copy the Atlas Connection String
 
 If you do not have a MongoDB Atlas cluster, [follow these instructions](https://docs.atlas.mongodb.com/getting-started/).
 
@@ -41,43 +41,31 @@ Click, “Network Access” from the Atlas menu and click, “Add IP Address”.
 
 To copy the connection string select the “CONNECT” button on your Atlas cluster then choose “Connect your application”.  Click the Copy button to copy the connection string to the clipboard.</p>
 
-### 4. Modify the RUN.SH file to update the MongoDB Atlas Connection string**
+### 4. Execute the RUN.SH script passing Atlas Connection String
 
-Update the RUN.SH file in two places:
-
-Location 1. Modify the value of “connection.uri” of **mongo-atlas-sink** and paste in the Atlas connection string.  Note to add the correct password. 
-
-Location 2. Modify the value of “connection.uri” of **mysql-atlas-sink** and paste in the Atlas connection string.  Note to add the correct password. 
-
-### 5. Execute the RUN.SH script**
-
-The demo is now ready to go just issue a `sh run.sh` and the script will start the docker containers and configure the connectors.
-
-
+The demo is now ready to go just issue a `sh run.sh "<<paste in your Atlas Connection String here>>"` and the script will start the docker containers and configure the connectors.
 
 ## Running the Demo
 
-Once the docker images and containers are built and deployed, the demo can be run repeatedly by simply executing the `RUN.SH` script file.
+Once the docker images and containers are built and deployed, the demo can be run repeatedly by simply executing the `sh run.sh "<<paste in your Atlas Connection String here>>"`
 
-### 1. Execute the `RUN.SH` script file
+### 1. View the generated stock entities 
 
-### 2. View the generates stock entities by navigating on your docker host to http://localhost:8888
+Open a web browser on your docker host and point to http://localhost:8888
 
-The demo will randomly generate 10 securities, 5 for MySQL and 5 for MongoDB respectively.  This web page simply connects to MySQL and MongoDB and shows the names of the stocks.
+The demo will randomly generate 10 securities, 5 for MySQL and 5 for MongoDB respectively.  This web page simply connects to MySQL and MongoDB and show the names of the stocks that will be used within the current iteration of the demo.
 
-### 3. View the topic messages
+### 2. View the topic messages
 
-View the messages in the Kafka topics using the Kafkacat tool. 
+Stockgenmongo and Stockgenmysql containers are running python apps that are pushing stock transactions into their respective databases.  Messages in mysqlstock.Stocks.StockData topic are using the Debezium MySQL connector.  Messages in the stockdata.Stocks.StockData topic came from the MongoDB Connector for Apache Kafka.  You can view the messages in these Kafka topics using the Kafkacat tool.  Messages present in these topics validates that our connectors are set up and working.
 
-Messages in mysqlstock.Stocks.StockData topic are using the Debezium MySQL connector.  Messages in the stockdata.Stocks.StockData topic came from the MongoDB Connector for Apache Kafka.  This validates that our connectors are set up and the supportive stockgenmongo and stockgenmysql python generation apps are working.
-
-#### View messages in MySQL topic
+#### View messages from MySQL in mysqlstock.Stocks.StockData topic
 `kafkacat -b 127.0.0.1:9092  -t mysqlstock.Stocks.StockData -s avro -r 127.0.0.1:8081`
 
 ...
 {"before": null, "after": {"Value": {"company_symbol": {"string": "WTP"}, "company_name": {"string": "WHIMSICAL TAMBOUR PRODUCTIONS"}, "price": {"bytes": "%\u0017"}, "tx_time": {"string": "2020-01-28T18:30:34Z"}}}, "source": {"version": "0.10.0.Final", "connector": "mysql", "name": "mysqlstock", "ts_ms": 1580236234000, "snapshot": {"string": "false"}, "db": "Stocks", "table": {"string": "StockData"}, "server_id": 223344, "gtid": null, "file": "mysql-bin.000003", "pos": 1906765, "row": 0, "thread": {"long": 9}, "query": null}, "op": "c", "ts_ms": {"long": 1580236234223}}
 
-#### View messages in MongoDB topic
+#### View messages from MongoDB in stockdata.Stocks.StockData topic
 `kafkacat -b 127.0.0.1:9092  -t stockdata.Stocks.StockData`
 
 …
@@ -85,9 +73,9 @@ Messages in mysqlstock.Stocks.StockData topic are using the Debezium MySQL conne
 
 ### 4. View the combined data in MongoDB Atlas
 
-As the MongoDB sink connector writes data to MongoDB Atlas you can see it show up in the StockData collection.  Click on "Collections" in MongoDB Atlas and view the StockData collection in the Stocks database. These data are from both the MySQL and MongoDB databases.
+The MongoDB Connector for Apache Kafka is configured as a sink connector and writes data to MongoDB Atlas.  Data is written to the StockData collection in the Stocks database.  Click on "Collections" tab in your MongoDB Atlas portal to view the StockData collection. These data are from both the MySQL and MongoDB databases.
 
 ### 7. Calculate the moving average using R
 
-Launch RStudio and run through the script, "R-Demo-Script.txt" located in this github repository.  In this script it has two plots, one will display a blox plot of all the stock entities and the next plot will show the moving average for a selected entity.  Note:  Make sure you change the stock ticker symbol to a stock that exists in your demo.
+The R language has many libraies that are useful for analytics.  MongoDB has support for R via the mongolite R driver.  The script "R-Demo-Script.txt" located in this github repository showcases two plots: one that displays a blox plot of all the stock entities showing max and min of each entity, the second shows the moving average for a selected entity.  Note:  Make sure you change the stock ticker symbol to a stock that exists when you run the command to show the moving average.
 
