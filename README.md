@@ -71,11 +71,11 @@ Stockgenmongo and Stockgenmysql containers are running python apps that are push
 …
 "{\"_id\": {\"$oid\": \"5e307e3940bacb724265e4a8\"}, \"company_symbol\": \"ISH\", \"company_name\": \"ITCHY STANCE HOLDINGS\", \"price\": 35.02, \"tx_time\": \"2020-01-28T18:32:25Z\"}"
 
-### 4. View the combined data in MongoDB Atlas
+### 3. View the combined data in MongoDB Atlas
 
 The MongoDB Connector for Apache Kafka is configured as a sink connector and writes data to MongoDB Atlas.  Data is written to the StockData collection in the Stocks database.  Click on "Collections" tab in your MongoDB Atlas portal to view the StockData collection. These data are from both the MySQL and MongoDB databases.
 
-### 7. Calculate the moving average using R
+### 4. Calculate the moving average using R
 
 The R language has many libraries that are useful for analytics.  MongoDB has support for R via the mongolite R driver.  The script "R-Demo-Script.txt" located in this github repository showcases two plots: one that displays a blox plot of all the stock entities showing max and min of each entity, the second shows the moving average for a selected entity.  Note:  Make sure you change the stock ticker symbol to a stock that exists when you run the command to show the moving average.
 
