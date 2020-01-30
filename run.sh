@@ -8,18 +8,8 @@ if lsof -Pi :27017 -sTCP:LISTEN -t >/dev/null ; then
 fi
 )
 
-#echo "Building the MongoDB Kafka Connector"
-#(
-#cd ..
-#./gradlew clean createConfluentArchive
-#echo -e "Unzipping the confluent archive plugin....\n"
-#unzip -d ./build/confluent ./build/confluent/*.zip
-#find ./build/confluent -maxdepth 1 -type d ! -wholename "./build/confluent" -exec mv {} ./build/confluent/kafka-connect-mongodb \;
-#)
-
 echo "Starting docker ."
 docker-compose up -d --build
-#["mysql-atlas-sink","mongo-atlas-sink","mysql-connector","mongo-source-stockdata"]
 function clean_up {
     echo "\n\nSHUTTING DOWN\n\n"
     curl --output /dev/null -X DELETE http://localhost:8083/connectors/mysql-atlas-sink || true
@@ -33,12 +23,12 @@ function clean_up {
     then
       echo "NOTE: Data from the demo was left on the MongoDB Atlas cluster.\nIf you would like a clean demo make sure to remove data in the StockData collection.\n\nBye!\n"
     else
-      echo -e $1
+      echo -e $1 Hello!!
     fi
 }
 
 sleep 5
-echo -ne "\n\nWaiting for the systems to be ready.."
+echo "\n\nWaiting for the systems to be ready.."
 function test_systems_available {
   COUNTER=0
   until $(curl --output /dev/null --silent --head --fail http://localhost:$1); do
@@ -106,14 +96,14 @@ curl -X POST -H "Content-Type: application/json" --data '
      "collection":"StockData"
 }}' http://localhost:8083/connectors -w "\n"
 
-echo "\nAdding MongoDB Kafka Sink Connector for the 'stockdata' topic into the 'stocks.stockdata' collection in Atlas:"
+echo "\nAdding MongoDB Kafka Sink Connector for the 'stockdata' topic into the 'stocks.stockdata' collection in Atlas"
 curl -X POST -H "Content-Type: application/json" --data '
   {"name": "mongo-atlas-sink",
    "config": {
      "connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
      "tasks.max":"1",
      "topics":"stockdata.Stocks.StockData",
-     "connection.uri":"mongodb+srv://kafkauser:kafkapassword@mongodbsink-szptp.mongodb.net/test?retryWrites=true&w=majority",
+     "connection.uri":"'"$1"'",
      "database":"Stocks",
      "collection":"StockData",
      "key.converter":"org.apache.kafka.connect.json.JsonConverter",
@@ -122,14 +112,14 @@ curl -X POST -H "Content-Type: application/json" --data '
      "value.converter.schemas.enable":false
 }}' http://localhost:8083/connectors -w "\n"
 
-echo "\nAdding MongoDB Kafka Sink Connector for the MySQL topic into the 'stocks.stockdata' collection in Atlas:"
+echo "\nAdding MongoDB Kafka Sink Connector for the MySQL topic into the 'stocks.stockdata' collection in Atlas"
 curl -X POST -H "Content-Type: application/json" --data '
   {"name": "mysql-atlas-sink",
    "config": {
      "connector.class":"com.mongodb.kafka.connect.MongoSinkConnector",
      "tasks.max":"1",
      "topics":"mysqlstock.Stocks.StockData",
-     "connection.uri":"mongodb+srv://kafkauser:kafkapassword@mongodbsink-szptp.mongodb.net/test?retryWrites=true&w=majority",
+     "connection.uri":"'"$1"'",
      "database":"Stocks",
      "collection":"StockData",
      "key.converter":"io.confluent.connect.avro.AvroConverter",
@@ -144,7 +134,7 @@ curl -X POST -H "Content-Type: application/json" --data '
 
 
 sleep 3
-echo -e "\nAdding Debezium MySQL Source Connector for the 'Stocks.StockData' table:"
+echo "\nAdding Debezium MySQL Source Connector for the 'Stocks.StockData' table:"
 curl -X POST -H "Content-Type: application/json" --data '
 {
   "name": "mysql-connector",

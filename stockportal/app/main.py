@@ -56,7 +56,7 @@ def hello():
     print('Successfully connected to MongoDB')
 
     try:
-        c = pymongo.MongoClient(MONGO_URI) #"mongodb+srv://kafkauser:kafkapassword@mongodbsink-szptp.mongodb.net/test?retryWrites=true&w=majority")
+        c = pymongo.MongoClient(MONGO_URI)
         db = c.get_database(name='Stocks')
         mycol = db["StockData"]
         stocks=mycol.aggregate([
