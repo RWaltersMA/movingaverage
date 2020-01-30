@@ -28,5 +28,5 @@ ggplot(data=tsdf,mapping=aes(x=tss.company_symbol, y=tss.price, color=tss.compan
 
 — Calculate the moving average
 
-ggplot(data=subset(tsdf,tss.company_symbol == "DMU"),mapping=aes(as.POSIXct.default(tss.tx_time,format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"), y=tss.price, color=tss.company_symbol)) + geom_point() + geom_smooth(method='loess', color = "#09557f",size = 0.6) + ggtitle("Moving average") + xlab("Time") + ylab("Price")
+ggplot(data=subset(tsdf,tss.company_symbol == "<<YOUR_SYMBOL_HERE>>"),mapping=aes(as.POSIXct.default(tss.tx_time,format = "%Y-%m-%dT%H:%M:%SZ", tz = "UTC"), y=tss.price, color=tss.company_symbol)) + geom_point() + geom_smooth(method='loess', color = "#09557f",size = 0.6) + ggtitle("Moving average") + xlab("Time") + ylab("Price")
 

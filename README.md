@@ -77,5 +77,5 @@ The MongoDB Connector for Apache Kafka is configured as a sink connector and wri
 
 ### 7. Calculate the moving average using R
 
-The R language has many libraies that are useful for analytics.  MongoDB has support for R via the mongolite R driver.  The script "R-Demo-Script.txt" located in this github repository showcases two plots: one that displays a blox plot of all the stock entities showing max and min of each entity, the second shows the moving average for a selected entity.  Note:  Make sure you change the stock ticker symbol to a stock that exists when you run the command to show the moving average.
+The R language has many libraries that are useful for analytics.  MongoDB has support for R via the mongolite R driver.  The script "R-Demo-Script.txt" located in this github repository showcases two plots: one that displays a blox plot of all the stock entities showing max and min of each entity, the second shows the moving average for a selected entity.  Note:  Make sure you change the stock ticker symbol to a stock that exists when you run the command to show the moving average.
 
