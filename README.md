@@ -18,7 +18,7 @@ This demo generates fake stock data and populates two databases - MySQL and Mong
 
 Run the following script from the command shell:
 
-	`Build-images.sh`
+`Build-images.sh`
 
 Note: Make sure you are in the same directory as the build-images script file.  Also, you may have to add execute permission via a `chmod +x build-images.sh` to execute the script.
 
