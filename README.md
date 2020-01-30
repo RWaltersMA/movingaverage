@@ -10,25 +10,25 @@ This demo generates fake stock data and populates two databases - MySQL and Mong
   - Mongolite R driver (optional)
 
 ## Running the demo
-**1. Download/Clone the docker files from the GitHub repository**
+###1. Download/Clone the docker files from the GitHub repository
 
-[https://github.com/RWaltersMA/movingaverage.git]([https://github.com/RWaltersMA/movingaverage.git])
+[https://github.com/RWaltersMA/movingaverage.git](https://github.com/RWaltersMA/movingaverage.git)
 
 **2. Build the demo images**
 
-	Run the following script from the command shell:
+Run the following script from the command shell:
 
-		`Build-images.sh`
+	`Build-images.sh`
 
-	Note: Make sure you are in the same directory as the build-images script file.  Also, you may have to add execute permission via a `chmod +x build-images.sh` to execute the script.
+Note: Make sure you are in the same directory as the build-images script file.  Also, you may have to add execute permission via a `chmod +x build-images.sh` to execute the script.
 
-	This shell script will build the following demo containers locally: mysqlimg, stockgenmongo, stockgenmysql, stockportal.  You can confirm these four images were created by issuing a “docker images” command.
+This shell script will build the following demo containers locally: mysqlimg, stockgenmongo, stockgenmysql, stockportal.  You can confirm these four images were created by issuing a “docker images” command.
 
 **3. Copy the Atlas Connection String**
 
->If you do not have a MongoDB Atlas cluster, [follow these instructions](https://docs.atlas.mongodb.com/getting-started/).
+If you do not have a MongoDB Atlas cluster, [follow these instructions](https://docs.atlas.mongodb.com/getting-started/).
 
->Just creating the cluster is not enough to run the demo.  You will need to define a database user for use by the Kafka Connector to connect to the MongoDB Atlas cluster.  You will also have to whitelist the IP address of the docker host.
+Just creating the cluster is not enough to run the demo.  You will need to define a database user for use by the Kafka Connector to connect to the MongoDB Atlas cluster.  You will also have to whitelist the IP address of the docker host.
 
 If you have not created a database user for the Kafka Connector:
 
