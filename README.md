@@ -52,3 +52,41 @@ Location 2. Modify the value of “connection.uri” of **mysql-atlas-sink** and
 ### 5. Execute the RUN.SH script**
 
 The demo is now ready to go just issue a `sh run.sh` and the script will start the docker containers and configure the connectors.
+
+
+## Running the Demo
+
+Once the docker images and containers are built and deployed, the demo can be run repeatedly by simply executing the `RUN.SH` script file.
+
+### Execute the `RUN.SH` script file
+
+### View the generates stock entities by navigating on your docker host to http://localhost:8888
+
+The demo will randomly generate 10 securities, 5 for MySQL and 5 for MongoDB respectively.  This web page simply connects to MySQL and MongoDB and shows the names of the stocks.
+
+### View the topic messages
+
+View the messages in the Kafka topics using the Kafkacat tool. 
+
+Messages in mysqlstock.Stocks.StockData topic are using the Debezium MySQL connector.  Messages in the stockdata.Stocks.StockData topic came from the MongoDB Connector for Apache Kafka.  This validates that our connectors are set up and the supportive stockgenmongo and stockgenmysql python generation apps are working.
+
+#### View messages in MySQL topic
+`kafkacat -b 127.0.0.1:9092  -t mysqlstock.Stocks.StockData -s avro -r 127.0.0.1:8081`
+
+...
+{"before": null, "after": {"Value": {"company_symbol": {"string": "WTP"}, "company_name": {"string": "WHIMSICAL TAMBOUR PRODUCTIONS"}, "price": {"bytes": "%\u0017"}, "tx_time": {"string": "2020-01-28T18:30:34Z"}}}, "source": {"version": "0.10.0.Final", "connector": "mysql", "name": "mysqlstock", "ts_ms": 1580236234000, "snapshot": {"string": "false"}, "db": "Stocks", "table": {"string": "StockData"}, "server_id": 223344, "gtid": null, "file": "mysql-bin.000003", "pos": 1906765, "row": 0, "thread": {"long": 9}, "query": null}, "op": "c", "ts_ms": {"long": 1580236234223}}
+
+#### View messages in MongoDB topic
+`kafkacat -b 127.0.0.1:9092  -t stockdata.Stocks.StockData`
+
+…
+"{\"_id\": {\"$oid\": \"5e307e3940bacb724265e4a8\"}, \"company_symbol\": \"ISH\", \"company_name\": \"ITCHY STANCE HOLDINGS\", \"price\": 35.02, \"tx_time\": \"2020-01-28T18:32:25Z\"}"
+
+#### View the combined data in MongoDB Atlas
+
+As the MongoDB sink connector writes data to MongoDB Atlas you can see it show up in the StockData collection.  Click on "Collections" in MongoDB Atlas and view the StockData collection in the Stocks database. These data are from both the MySQL and MongoDB databases.
+
+#### Calculate the moving average using R
+
+Launch RStudio and run through the script, "R-Demo-Script.txt" located in this github repository.  In this script it has two plots, one will display a blox plot of all the stock entities and the next plot will show the moving average for a selected entity.  Note:  Make sure you change the stock ticker symbol to a stock that exists in your demo.
+
