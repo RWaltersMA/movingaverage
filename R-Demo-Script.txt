@@ -1,10 +1,10 @@
 
 
-<B>Showing moving average Demo using R Studio.</B>
+Showing moving average Demo using R Studio.
 
 After the demo has been running a few minutes you will have enough data to populate the Atlas cluster and show something interesting in R.  
 
-<U>Run the following in the RStudio Console:</U>
+Run the following in the RStudio Console:
 
 install.packages("ggplot2")
 install.packages(“mongolite”)
