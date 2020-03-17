@@ -24,6 +24,8 @@ Note: Make sure you are in the same directory as the build-images script file.  
 
 This shell script will build the following demo containers locally: mysqlimg, stockgenmongo, stockgenmysql, stockportal.  You can confirm these four images were created by issuing a “docker images” command.
 
+![Alt text](diagram.png?raw=true "Demo Docker Container topology")
+
 ### 3. Copy the Atlas Connection String
 
 If you do not have a MongoDB Atlas cluster, [follow these instructions](https://docs.atlas.mongodb.com/getting-started/).
