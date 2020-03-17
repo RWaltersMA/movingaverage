@@ -9,8 +9,8 @@ db.StockData.remove({})
 
 
 install.packages("ggplot2")
-install.package(“mongolite”)
-libary(ggplot2)
+install.packages(“mongolite”)
+library(ggplot2)
 library(mongolite)
 
 ts=mongo(collection="StockData", db="Stocks", url="<<ATLAS CONNECTION STRING GOES HERE>>")
