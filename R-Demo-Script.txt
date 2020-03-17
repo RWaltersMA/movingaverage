@@ -7,7 +7,7 @@ After the demo has been running a few minutes you will have enough data to popul
 Run the following in the RStudio Console:
 
 install.packages("ggplot2")
-install.packages(“mongolite”)
+install.packages("mongolite")
 library(ggplot2)
 library(mongolite)
 
