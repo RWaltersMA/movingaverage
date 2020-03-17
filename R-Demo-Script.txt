@@ -1,12 +1,10 @@
 
 
-Showing moving average Demo
+<B>Showing moving average Demo using R Studio.</B>
 
-PREP:
-mongo "mongodb+srv://mongodbsink-szptp.mongodb.net/test"  --username <<USERNAME>>
-Use Stocks
-db.StockData.remove({})
+After the demo has been running a few minutes you will have enough data to populate the Atlas cluster and show something interesting in R.  
 
+<U>Run the following in the RStudio Console:</U>
 
 install.packages("ggplot2")
 install.packages(“mongolite”)
